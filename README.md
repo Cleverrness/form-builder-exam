@@ -58,4 +58,4 @@ After you've completed your tasks, and you are ready to submit it, do the follow
 * Send us an email with your repo link
 * Profit!
 
-Please contact `aryel@wix.com` or `shalevsh@wix.com` for details
+Please contact `shalevsh@wix.com` for details
