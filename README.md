@@ -54,7 +54,7 @@ After you've completed your tasks, and you are ready to submit it, do the follow
 * Make sure all the code is committed and pushed
 * Make sure you added a markdown file with instructions on how to run it
 * Clone your repo and use your instructions to see it works as expected
-* Add `aryelu` and `shalevshalit` as users to the repo (Master permission)
+* Add `shalevshalit` as users to the repo (Master permission)
 * Send us an email with your repo link
 * Profit!
 
