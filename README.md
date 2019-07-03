@@ -45,14 +45,16 @@ For an url with the id of the form, you will see all the fields you created in t
 For an url with the id of the form, you will see all the form submissions in a table when each header is the field name, and each row is a submission with the user input.
 
 ## Before Submitting
-* Make sure to use clean code.
+* Make sure to use clean code. (References: [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) [Code Complete](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/) )
 * Your data should be presistent and well structured. (sqlite, in-memory, etc.)
 * You might be required to explain your implementation, make sure you understand all your code.
 
 ## Submitting your project
 After you've completed your tasks, and you are ready to submit it, do the following:
+* Create a git repositry (preferably on github.com)
 * Make sure all the code is committed and pushed
-* Make sure you added a markdown file with instructions on how to run it
+* Make sure you added a markdown file with instructions on how to run your project from scratch, that must include any operations that is required in order to run the project (i.e. setup a database, create tables, etc.)
+* **BONUS**: Automate all of the procedures to run the project (i.e. create a script that will setup the datbase(s), install all modules, build the code, run the code etc.)
 * Clone your repo and use your instructions to see it works as expected
 * Add `shalevshalit` as users to the repo (Master permission)
 * Send us an email with your repo link
