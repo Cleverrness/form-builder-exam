@@ -45,7 +45,7 @@ For an url with the id of the form, you will see all the fields you created in t
 For an url with the id of the form, you will see all the form submissions in a table when each header is the field name, and each row is a submission with the user input.
 
 ## Before Submitting
-* Make sure to use clean code. (References: [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) [Code Complete](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/) )
+* Make sure to use clean code. (References: [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882), [Code Complete](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/) )
 * Your data should be presistent and well structured. (sqlite, in-memory, etc.)
 * You might be required to explain your implementation, make sure you understand all your code.
 
