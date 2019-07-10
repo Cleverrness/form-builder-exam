@@ -4,6 +4,18 @@ Welcome to the Form Builder application exam. This app is simple, you can create
 
 You can use **any stack** you like: any language for the server(java, c#, python, node and etc.), and any framework for the javascript client part(React, Angular, Vue.js and etc.).
 
+You can use any general purpose libraries, that are not specifically solve the "form building" case.
+However, please note, you will be required to add additional functionality after you finish the project, when choosing libraries, keep that in mind.
+
+Example of things you can (only if you _like to_, it's just an example) use:
+[express](https://expressjs.com/),
+[typeorm](https://github.com/typeorm/typeorm),
+[mongoose](https://mongoosejs.com/),
+[axios](https://github.com/axios/axios),
+[material-ui](https://material-ui.com/),
+[react-bootstrap](https://react-bootstrap.github.io/),
+[wix-style-react](https://github.com/wix/wix-style-react),
+
 glhf
 
 # Instructions
