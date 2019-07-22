@@ -68,8 +68,8 @@ After you've completed your tasks, and you are ready to submit it, do the follow
 * Make sure you added a markdown file with instructions on how to run your project from scratch, that must include any operations that is required in order to run the project (i.e. setup a database, create tables, etc.)
 * **BONUS**: Automate all of the procedures to run the project (i.e. create a script that will setup the datbase(s), install all modules, build the code, run the code etc.)
 * Clone your repo and use your instructions to see it works as expected
-* Add `shalevshalit` as users to the repo (Master permission)
+* Add `shalevshalit` and `yurynix` as users to the repo (Master permission)
 * Send us an email with your repo link
 * Profit!
 
-Please contact `shalevsh@wix.com` for details
+Please contact `shalevsh@wix.com` or `yurym@wix.com` for details
