@@ -1,8 +1,7 @@
 # Form Builder Task
-Welcome to the Form Builder application exam. This app is simple, you can create a custom form and anyone can submit answers.
+Welcome to the Form Builder application exam. This app is simple web application that allows the user to create a custom form to which anyone can submit answers. (Think: Google Forms)
 
-
-You can use **any stack** you like: any language for the server(java, c#, python, node and etc.), and any framework for the javascript client part(React, Angular, Vue.js and etc.).
+You can use **any stack** you like: any language for the server(java, c#, python, node and etc.), and any framework for the javascript client part(React, Angular, Vue.js and etc.). You will have to deploy your app to some server.
 
 You can use any general purpose libraries, that are not specifically solve the "form building" case.
 However, please note, you will be required to add additional functionality after you finish the project, when choosing libraries, keep that in mind.
@@ -57,16 +56,16 @@ For an url with the id of the form, you will see all the fields you created in t
 For an url with the id of the form, you will see all the form submissions in a table when each header is the field name, and each row is a submission with the user input.
 
 ## Before Submitting
-* Make sure to use clean code. (References: [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882), [Code Complete](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/) )
-* Your data should be presistent and well structured. (sqlite, in-memory, etc.)
+* Make sure to use clean code. (References: [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882), [Code Complete](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670/) ). Make use of tools that will help you with standtard [formatting](https://prettier.io/) an [linting](https://eslint.org/).
+* Your data should be presistent and well structured. When choosing a storage mechanism, consider it's pros and cons, use whatever suites the problem at hand, use proper entities and relations. (You can choose whatever storage solution you like)
 * You might be required to explain your implementation, make sure you understand all your code.
 
 ## Submitting your project
 After you've completed your tasks, and you are ready to submit it, do the following:
 * Create a git repositry (preferably on github.com)
 * Make sure all the code is committed and pushed
-* Make sure you added a markdown file with instructions on how to run your project from scratch, that must include any operations that is required in order to run the project (i.e. setup a database, create tables, etc.)
-* Deploy your work to be view from any computer (you can find simple free deployment in [heroku](https://www.heroku.com/), but you can also find one in Amazon, Google, Azure and more).
+* Make sure you added a markdown file (`README.md`) with instructions on how to run your project from scratch, that must include any operations that is required in order to run the project (i.e. setup a database, create tables, etc.)
+* Deploy your work to be viewed from any computer (you can find simple free deployment in [heroku](https://www.heroku.com/), but you can also find one in Amazon, Google, Azure and more).
 * Clone your repo and use your instructions to see it works as expected
 * Add `shalevshalit`, `yurynix` and `adimara` as users to the repo (Master permission)
 * Send us an email with your repo link
