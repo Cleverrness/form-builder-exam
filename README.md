@@ -67,8 +67,8 @@ After you've completed your tasks, and you are ready to submit it, do the follow
 * Make sure you added a markdown file (`README.md`) with instructions on how to run your project from scratch, that must include any operations that is required in order to run the project (i.e. setup a database, create tables, etc.)
 * Deploy your work to be viewed from any computer (you can find simple free deployment in [heroku](https://www.heroku.com/), but you can also find one in Amazon, Google, Azure and more).
 * Clone your repo and use your instructions to see it works as expected
-* Add `shalevshalit`, `yurynix` and `adimara` as users to the repo (Master permission)
+* Add `shalevshalit`, `itzikkit` and `Wo1v3r` as users to the repo (Master permission)
 * Send us an email with your repo link
 * Profit!
 
-Please contact `shalevsh@wix.com` or `yurym@wix.com` or `adima@wix.com` for details
+Please contact `shalevsh@wix.com` or `itzikk@wix.com` or `jonathanl@wix.com` for details
