@@ -8,3 +8,5 @@
 /httpRequests/
 /vcs.xml
 /form-builder-exam.iml
+
+*/../node_modules/
