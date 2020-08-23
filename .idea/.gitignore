@@ -9,4 +9,5 @@
 /vcs.xml
 /form-builder-exam.iml
 
-*/../node_modules/
+/node_modules/
+/Server/node_modules/
