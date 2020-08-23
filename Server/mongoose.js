@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 // Create my relevant Schemas
 const Schema = mongoose.Schema;
 mongoose.connect('mongodb+srv://galUser:Wixexam123%21@cluster0.zkrn1.gcp.mongodb.net/Forms?retryWrites=true&w=majority', {useNewUrlParser: true});
-
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', async function() {
+    console.log("DB is now open");
+});
 // List Schema
 const formListSchema = new Schema({
     id:  Number, // String is shorthand for {type: String}
@@ -36,8 +40,20 @@ async function getAll(){
     return allForms;
 };
 
-// This Function adds a new form to the DB
-function add_new_form(name,num_of_submissions, link_submit, link_submission)
+async function getNextId() {
+    const allForms = await aFormList.find().sort({id: -1}).limit(1);
+    if(allForms.length === 0)
+    {
+        return 0;
+    }
+    else
+    {
+        return (allForms[0]._doc.id + 1);
+    }
+}
+
+// This Function adds a new form to the DB if the values are correct
+async function add_new_form(name,num_of_submissions, link_submit, link_submission)
 {
     if(!(name instanceof String || typeof name === 'string') ||
         !(Number.isInteger(num_of_submissions)) ||
@@ -46,21 +62,17 @@ function add_new_form(name,num_of_submissions, link_submit, link_submission)
     {
         throw {message: "error adding new form, wrong params "};
     }
+    let countForms = await getNextId();
+    console.log("Count is " + countForms)
+    let newForm = new aFormList({
+        id: countForms,
+        name: name,
+        numOfSubmissions: num_of_submissions,
+        LinkToSubmission: link_submission,
+        LinkToSubmit: link_submit
+    })
 
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
-    db.once('open', async function() {
-        // let countForms = await aFormList.countDocuments();
-        let newForm = new aFormList({
-            id: 865,
-            name: name,
-            numOfSubmissions: num_of_submissions,
-            LinkToSubmission: link_submission,
-            LinkToSubmit: link_submit
-        })
-
-        await newForm.save();
-    });
+    await newForm.save();
 }
 
 
