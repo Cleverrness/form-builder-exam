@@ -2,6 +2,28 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("../mongoose");
 
+
+router.get("/all_forms", async (req,res,next) => {
+    try{
+        let all_forms = await mongoose.get_all_forms();
+        //Beautify the array
+        let new_forms_array = []
+        all_forms.forEach((form) => {
+            new_forms_array.push({
+                id: form.id,
+                name: form.name,
+                numOfSubmissions: form.numOfSubmissions,
+                LinkToSubmission: form.LinkToSubmission,
+                LinkToSubmit: form.LinkToSubmit
+            })
+        })
+        res.send(new_forms_array)
+
+    }catch (error) {
+        next(error);
+    }
+})
+
 /**
  * This endpoint will create a new form in the DB
  * the form parameters (question and name) should be implemented in the req body

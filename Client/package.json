@@ -8,9 +8,15 @@
     "lint": "node_modules/.bin/vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.20.0",
+    "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
+    "vue-axios": "^2.1.5",
     "vue-router": "^3.2.0",
+    "vue-sessionstorage": "^1.0.0",
+    "vue2-slideout-panel": "^2.12.0",
+    "vuelidate": "^0.7.5",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -43,7 +49,29 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off",
+      "func-call-spacing": "off",
+      "no-extra-semi": "off",
+      "semi": "off",
+      "object-curly-spacing": "off",
+      "object-curly-newline": "off",
+      "quotes": "off",
+      "no-multi-spaces": "off",
+      "arrow-spacing": "off",
+      "arrow-parens": "off",
+      "space-before-function-paren": "off",
+      "no-multiple-empty-lines": "off",
+      "key-spacing": "off",
+      "indent": "off",
+      "prefer-const": "off",
+      "brace-style": "off",
+      "space-before-blocks": "off",
+      "keyword-spacing": "off",
+      "comma-spacing": "off",
+      "padded-blocks": "off",
+      "comma-dangle": "off"
+    }
   },
   "browserslist": [
     "> 1%",
