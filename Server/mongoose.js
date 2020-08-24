@@ -54,7 +54,7 @@ const submissionsCollection = mongoose.model('submissions', submissionsSchema);
  */
 async function getAllForms(){
     const allForms = await aFormList.find();
-    console.log("Waiting for all forms to be retrieved")
+    // console.log("Waiting for all forms to be retrieved")
     return allForms;
 };
 
@@ -95,7 +95,7 @@ async function add_new_form(name, host, questions)
     let countForms = await getNextFormId();
     let submit_url = host + "/forms/submit/" + countForms;
     let submission_url = host + "/forms/submission/" + countForms;
-    console.log("Count is " + countForms)
+    // console.log("Count is " + countForms)
 
     // build the new form
     let buildForm = new formBuilderCollection({
@@ -118,7 +118,7 @@ async function add_new_form(name, host, questions)
         await newForm.save();
     }
     catch (error) {
-        console.error(error)
+        // console.error(error)
         throw {message: "documents were not saved"};
     }
 
@@ -142,7 +142,7 @@ async function getFormQuestion(form_id)
             type: qstnElem._doc.type
         }
         form_questions.push(qstn);
-        console.log(qstn);
+        // console.log(qstn);
     })
 
     return form_questions;
