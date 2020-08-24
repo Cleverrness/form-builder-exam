@@ -19,19 +19,20 @@ app.use(logger("dev")); //logger
 app.use(express.json()); // parse application/json
 
 app.use(express.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
-app.use(express.static(path.join(__dirname, "public"))); //To serve static files such as images, CSS files, and JavaScript files
+app.use("/", express.static(path.join(__dirname, "../Client/dist")));
 
 const port = "3000";
 const forms = require("./routes/forms");
 
 // #end Configurations
 
-app.get("/", (req, res) => {
-    mongoose.get_all_forms().then((allForms) => {
-        console.log(allForms);
-        res.send(allForms);
-    });
-});
+// app.get("/", (req, res) => {
+//     mongoose.get_all_forms().then((allForms) => {
+//         console.log(allForms);
+//         res.send(allForms);
+//     });
+// });
+
 
 app.use("/forms", forms);
 
