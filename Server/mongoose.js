@@ -196,15 +196,41 @@ async function submitAnswers(form_id, answers)
         await submissionsCollection.findOneAndUpdate({form_id: form_id}, {Answers: appended_answers});
         await update_submission_number(form_id);
 
-        // console.log(appended_answers);
 
     }
 }
 
+/**
+ * This function is incrementing the number of applied submissions
+ * @param form_id - the id of the form to increment submission for
+ * @returns {Promise<void>}
+ */
 async function update_submission_number(form_id)
 {
-    const form = await aFormList.findOne({id: form_id});
+    const form = await aFormList.findOne({id: form_id}).lean();
+    await aFormList.findOneAndUpdate({id: form_id}, {numOfSubmissions: (form.numOfSubmissions + 1)})
 
 }
 
-module.exports = {mongoose, add_new_form, getAllForms, getFormQuestion, submitAnswers}
+/**
+ * This function returns an array of all the answers that were submitted to a form_id
+ * @param form_id - the id of the form to retrieve its answers
+ * @returns {Promise<[]>}
+ */
+async function get_submissions_by_id(form_id)
+{
+    const all_submissions = await submissionsCollection.findOne({form_id: form_id}).lean();
+
+    //Beautify the Answers array
+    let answers = [];
+    all_submissions.Answers.forEach((answer) => {
+        answers.push({
+            qName: answer.qName,
+            qAns: answer.qAns
+        })
+    });
+
+    return answers;
+}
+
+module.exports = {mongoose, add_new_form, getAllForms, getFormQuestion, submitAnswers, get_submissions_by_id}

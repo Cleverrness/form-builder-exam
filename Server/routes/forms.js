@@ -55,4 +55,20 @@ router.post("/submit", async (req,res,next) => {
     }
 })
 
+/**
+ * This endpoint will return all the answers that were submitted to the form by its id
+ */
+router.get("/submission/:form_id", async (req, res, next) => {
+    try{
+        const {form_id} = req.params;
+
+        const answers = await mongoose.get_submissions_by_id(form_id);
+
+        res.status(200).send(answers);
+
+    }catch (error) {
+        next(error)
+    }
+})
+
 module.exports = router;
