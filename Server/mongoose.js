@@ -53,7 +53,7 @@ const submissions_collection = mongoose.model('submissions', submissions_schema)
  * @returns {Promise<*>} an array of all the form in the DB
  */
 async function get_all_forms(){
-    const all_forms = await a_form_list.find();
+    const all_forms = await a_form_list.find().lean();
     return all_forms;
 };
 
@@ -131,17 +131,23 @@ async function get_form_question(form_id)
 {
     const form = await form_builder_collection.findOne({form_id: form_id});
 
-    let form_questions = [];
-    form._doc.Questions.forEach((qstnElem) => {
-        let qstn = {
-            label: qstnElem._doc.label,
-            name: qstnElem._doc.name,
-            type: qstnElem._doc.type
-        }
-        form_questions.push(qstn);
-    })
+    if(form) {
+        let form_questions = [];
+        form._doc.Questions.forEach((qstnElem) => {
+            let qstn = {
+                label: qstnElem._doc.label,
+                name: qstnElem._doc.name,
+                type: qstnElem._doc.type
+            }
+            form_questions.push(qstn);
+        })
 
-    return form_questions;
+        return form_questions;
+    }
+    else
+    {
+        throw {message: "Could not find the doc"}
+    }
 }
 
 /**

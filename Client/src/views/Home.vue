@@ -1,18 +1,33 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="Client/src/assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <formsTable :url="urlToGetForms" class="form-table"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import formsTable from '@/components/formsTable.vue'
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      urlToGetForms: "https://heroku-form-builder.herokuapp.com/forms/all_forms"
+    };
+  },
   components: {
-    HelloWorld
+    formsTable
   }
 }
 </script>
+
+<style>
+  .home{
+    width: 85%;
+    left: 0;
+    transform: translateX(10%);
+  }
+  .form-table{
+
+  }
+</style>
