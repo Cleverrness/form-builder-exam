@@ -21,7 +21,7 @@ app.use(express.json()); // parse application/json
 app.use(express.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use("/", express.static(path.join(__dirname, "../Client/dist")));
 
-const port = "80";
+const port = "5000";
 const forms = require("./routes/forms");
 
 // #end Configurations
