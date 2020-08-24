@@ -25,7 +25,7 @@ router.get("/submit/:form_id", async (req, res, next) =>{
     try{
         const {form_id} = req.params;
 
-        const questions = await mongoose.getFormQuestion(form_id);
+        const questions = await mongoose.get_form_question(form_id);
 
         res.status(200).send(questions);
 
@@ -45,7 +45,7 @@ router.post("/submit", async (req,res,next) => {
             throw {message: "Wrong parameters received"}
         }
 
-        await mongoose.submitAnswers(form_id, answers);
+        await mongoose.submit_answers(form_id, answers);
 
         res.sendStatus(201);
 

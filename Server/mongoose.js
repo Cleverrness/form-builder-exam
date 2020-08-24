@@ -10,7 +10,7 @@ db.once('open', async function() {
     console.log("DB is now open");
 });
 // List Schema
-const formListSchema = new Schema({
+const form_list_schema = new Schema({
     id:  Number, // String is shorthand for {type: String}
     name: String,
     numOfSubmissions:   Number,
@@ -19,43 +19,42 @@ const formListSchema = new Schema({
 });
 
 // A Schema that represents a question in a form
-const questionSchema = new Schema({
+const question_schema = new Schema({
     label: String,
     name: String,
     type: String
 })
 
 // Field Line in form Builder Schema
-const formBuilder = new Schema({
+const form_builder = new Schema({
     form_id: Number,
-    Questions: [questionSchema]
+    Questions: [question_schema]
 });
 
 // A Schema that represents an answer of a question in the form
-const submissionAnswer = new Schema({
+const submission_answer = new Schema({
     qName: String,
     qAns: String
 })
 
 // Submissions Schema to hold all the answers of a form
-const submissionsSchema = new Schema({
+const submissions_schema = new Schema({
     form_id: Number,
-    Answers: [submissionAnswer]
+    Answers: [submission_answer]
 })
 
 // Create the Specific Collection
-const aFormList = mongoose.model('allforms', formListSchema);
-const formBuilderCollection = mongoose.model('existing_forms', formBuilder);
-const submissionsCollection = mongoose.model('submissions', submissionsSchema);
+const a_form_list = mongoose.model('allforms', form_list_schema);
+const form_builder_collection = mongoose.model('existing_forms', form_builder);
+const submissions_collection = mongoose.model('submissions', submissions_schema);
 
 /**
  * This Function will retrieve all forms in the DB
  * @returns {Promise<*>} an array of all the form in the DB
  */
-async function getAllForms(){
-    const allForms = await aFormList.find();
-    // console.log("Waiting for all forms to be retrieved")
-    return allForms;
+async function get_all_forms(){
+    const all_forms = await a_form_list.find();
+    return all_forms;
 };
 
 /**
@@ -64,15 +63,15 @@ async function getAllForms(){
  * and returns this id + 1
  * @returns {Promise<number|*>} when resolved the number is next id to be used with
  */
-async function getNextFormId() {
-    const allForms = await aFormList.find().sort({id: -1}).limit(1);
-    if(allForms.length === 0)
+async function get_next_form_id() {
+    const all_forms = await a_form_list.find().sort({id: -1}).limit(1);
+    if(all_forms.length === 0)
     {
         return 0;
     }
     else
     {
-        return (allForms[0]._doc.id + 1);
+        return (all_forms[0]._doc.id + 1);
     }
 }
 
@@ -90,22 +89,21 @@ async function add_new_form(name, host, questions)
     {
         throw {message: "error adding new form, wrong params "};
     }
-
+    //TODO: deal with the race condition of 2 or more users adding new form on the same time
     //get the id for the new form and the relevant urls
-    let countForms = await getNextFormId();
-    let submit_url = host + "/forms/submit/" + countForms;
-    let submission_url = host + "/forms/submission/" + countForms;
-    // console.log("Count is " + countForms)
+    let count_forms = await get_next_form_id();
+    let submit_url = host + "/forms/submit/" + count_forms;
+    let submission_url = host + "/forms/submission/" + count_forms;
 
     // build the new form
-    let buildForm = new formBuilderCollection({
-        form_id: countForms,
+    let build_form = new form_builder_collection({
+        form_id: count_forms,
         Questions: questions
     })
 
     //add the new form to the form list
-    let newForm = new aFormList({
-        id: countForms,
+    let new_form = new a_form_list({
+        id: count_forms,
         name: name,
         numOfSubmissions: 0,
         LinkToSubmission: submission_url,
@@ -114,11 +112,10 @@ async function add_new_form(name, host, questions)
 
     // save to DB
     try{
-        await buildForm.save();
-        await newForm.save();
+        await build_form.save();
+        await new_form.save();
     }
     catch (error) {
-        // console.error(error)
         throw {message: "documents were not saved"};
     }
 
@@ -130,9 +127,9 @@ async function add_new_form(name, host, questions)
  * @param form_id - the id of the form to retrieve its qeustions
  * @returns {Promise<[]>} the questions array
  */
-async function getFormQuestion(form_id)
+async function get_form_question(form_id)
 {
-    const form = await formBuilderCollection.findOne({form_id: form_id});
+    const form = await form_builder_collection.findOne({form_id: form_id});
 
     let form_questions = [];
     form._doc.Questions.forEach((qstnElem) => {
@@ -142,7 +139,6 @@ async function getFormQuestion(form_id)
             type: qstnElem._doc.type
         }
         form_questions.push(qstn);
-        // console.log(qstn);
     })
 
     return form_questions;
@@ -154,12 +150,13 @@ async function getFormQuestion(form_id)
  * @param answers - the answers of the user
  * @returns {Promise<void>}
  */
-async function submitAnswers(form_id, answers)
+async function submit_answers(form_id, answers)
 {
-    let all_submissions = await submissionsCollection.findOne({form_id: form_id}).lean();
+    //TODO: deal with race condition of 2 or more users submitting answers on the same time
+    let all_submissions = await submissions_collection.findOne({form_id: form_id}).lean();
     if(!all_submissions)
     {
-        let new_submission = new submissionsCollection({
+        let new_submission = new submissions_collection({
             form_id: form_id,
             Answers: answers
         });
@@ -177,7 +174,7 @@ async function submitAnswers(form_id, answers)
         })
 
         //Create an array of the form questoins names
-        let form_qsts = await getFormQuestion(form_id);
+        let form_qsts = await get_form_question(form_id);
         let question_names = [];
         form_qsts.forEach((question) => {
             question_names.push(question.name);
@@ -193,7 +190,7 @@ async function submitAnswers(form_id, answers)
         })
 
         //Update the submissions
-        await submissionsCollection.findOneAndUpdate({form_id: form_id}, {Answers: appended_answers});
+        await submissions_collection.findOneAndUpdate({form_id: form_id}, {Answers: appended_answers});
         await update_submission_number(form_id);
 
 
@@ -207,8 +204,8 @@ async function submitAnswers(form_id, answers)
  */
 async function update_submission_number(form_id)
 {
-    const form = await aFormList.findOne({id: form_id}).lean();
-    await aFormList.findOneAndUpdate({id: form_id}, {numOfSubmissions: (form.numOfSubmissions + 1)})
+    const form = await a_form_list.findOne({id: form_id}).lean();
+    await a_form_list.findOneAndUpdate({id: form_id}, {numOfSubmissions: (form.numOfSubmissions + 1)})
 
 }
 
@@ -219,7 +216,7 @@ async function update_submission_number(form_id)
  */
 async function get_submissions_by_id(form_id)
 {
-    const all_submissions = await submissionsCollection.findOne({form_id: form_id}).lean();
+    const all_submissions = await submissions_collection.findOne({form_id: form_id}).lean();
 
     //Beautify the Answers array
     let answers = [];
@@ -233,4 +230,4 @@ async function get_submissions_by_id(form_id)
     return answers;
 }
 
-module.exports = {mongoose, add_new_form, getAllForms, getFormQuestion, submitAnswers, get_submissions_by_id}
+module.exports = {mongoose, add_new_form, get_all_forms, get_form_question, submit_answers, get_submissions_by_id}

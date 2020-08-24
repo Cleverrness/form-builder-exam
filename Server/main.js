@@ -27,7 +27,7 @@ const forms = require("./routes/forms");
 // #end Configurations
 
 app.get("/", (req, res) => {
-    mongoose.getAllForms().then((allForms) => {
+    mongoose.get_all_forms().then((allForms) => {
         console.log(allForms);
         res.send(allForms);
     });
