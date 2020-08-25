@@ -1,18 +1,38 @@
 <template>
-  <div>
-    <b-table striped hover :items="allForms" >
+  <div >
+    <b-table striped hover :items="allForms">
       <template v-slot:cell(LinkToSubmit)="data">
-        <a :href="data.item.LinkToSubmit">Submit to this form</a>
+        <b-button variant="link" @click="openSubmitForm(data.item.id)" :key="data.item.id">Submit to this form</b-button>
       </template>
       <template v-slot:cell(LinkToSubmission)="data">
-        <a :href="data.item.LinkToSubmission">View all Submissions of this form</a>
+        <b-button variant="link" @click="showSubmissionModal = !showSubmissionModal" :key="data.item.id">View all Submissions of this form</b-button>
       </template>
     </b-table>
+    <b-modal v-model="showSubmissionModal" hide-footer title="Using Component Methods">
+      <div class="d-block text-center">
+        <h3>Hello From Submission Modal!</h3>
+      </div>
+      <b-button class="mt-3" variant="outline-danger" block @click="showSubmissionModal = !showSubmissionModal">Close Me</b-button>
+    </b-modal>
+
+    <b-modal v-model="showSubmitModal"
+             scrollable
+             centered
+             no-close-on-backdrop
+             hide-footer
+             button-size="sm"
+             title="Submit the form">
+      <div class="d-block text-center" >
+        <selected-form @form-na="closeModal" :form_id="selectedFormId">Hello From Submit Modal!</selected-form>
+      </div>
+<!--      <b-button class="mt-3" variant="outline-danger" block @click="showSubmitModal = !showSubmitModal">Close Me</b-button>-->
+    </b-modal>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
+  import selectedForm from '@/components/selectedForm.vue';
 
   async function getForms(url) {
     let forms
@@ -22,12 +42,15 @@
         console.log(response)
         forms = response.data;
         return forms;
-      }).catch(response=> console.log("no recipes"))
+      }).catch(response=> console.log("no forms found"))
 
     return {
       recivedForms: forms
     }
   }
+
+
+
   export default {
     name: "formsTable",
     props: {
@@ -40,26 +63,19 @@
       return {
         fields: [
           {
-            // A column that needs custom formatting,
-            // calling formatter 'fullName' in this app
             key: 'LinkToSubmit',
             label: 'Submit',
             formatter: 'fullName'
           },
           {
-            // A regular column with custom formatter
             key: 'LinkToSubmission',
-          },
-          {
-            // A virtual column with custom formatter
-            key: 'birthYear',
-            label: 'Calculated Birth Year',
-            formatter: (value, key, item) => {
-              return new Date().getFullYear() - item.age
-            }
+            label: 'Submission'
           }
         ],
-        allForms: []
+        allForms: [],
+        showSubmissionModal: false,
+        showSubmitModal: false,
+        selectedFormId: null,
       }
     },
     methods: {
@@ -67,10 +83,23 @@
         console.log("Entered updateTable()");
         const {recivedForms} = await getForms(this.url);
         this.allForms = recivedForms;
+      },
+      async openSubmitForm(id)
+      {
+        console.log(id);
+        this.selectedFormId = id;
+        this.showSubmitModal = true;
+      },
+      closeModal()
+      {
+        this.showSubmitModal = false;
       }
     },
     mounted() {
       this.updateTable();
+    },
+    components: {
+      selectedForm
     }
 
   }
