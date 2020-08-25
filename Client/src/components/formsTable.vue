@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--Button for creating new form -->
-    <b-button block pill variant="info" sticky-header class="new-form-btn" @click="showAddFormModal = !showAddFormModal">Add new form</b-button>
+    <b-button block pill variant="info" sticky-header class="new-form-btn" @click="showModal">Add new form</b-button>
 
     <!--Forms table showing all forms from the DB -->
     <b-table striped hover stacked="md" :items="allForms" outlined no-border-collapse>
@@ -35,14 +35,14 @@
       </div>
     </b-modal>
 
-    <b-modal
-    hide-header
-    lazy
-    align="left"
-    v-model="showAddFormModal"
+    <modal
+      name="new-form-modal"
+      :width="350"
+      :height="600"
+      :draggable="true"
     >
     <new-form></new-form>
-    </b-modal>
+    </modal>
 
 
   </div>
@@ -113,6 +113,10 @@
       closeModal()
       {
         this.showSubmitModal = false;
+      },
+      showModal()
+      {
+        this.$modal.show('new-form-modal')
       }
     },
     mounted() {
@@ -129,5 +133,13 @@
 <style scoped>
   .new-form-btn {
     margin-bottom: 10px;
+  }
+
+  .bg-gra-01 {
+    background: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a18cd1));
+    background: -webkit-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
+    background: -moz-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
+    background: -o-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
+    background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);
   }
 </style>
