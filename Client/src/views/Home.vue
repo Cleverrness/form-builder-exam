@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <formsTable :url="urlToGetForms" class="form-table"/>
+    <formsTable :url="urlToGetForms"/>
   </div>
 </template>
 
@@ -26,8 +26,5 @@ export default {
     width: 85%;
     left: 0;
     transform: translateX(10%);
-  }
-  .form-table{
-
   }
 </style>
