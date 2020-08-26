@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{d6b4:function(e,n,a){"use strict";a.r(n);var t=function(){var e=this,n=e.$createElement,a=e._self._c||n;return a("div",{staticClass:"form-page"},[a("new-form")],1)},o=[],r=a("8d7b"),s={name:"NewFormPage",components:{newForm:r["a"]}},c=s,u=a("2877"),w=Object(u["a"])(c,t,o,!1,null,"508ae843",null);n["default"]=w.exports}}]);
+//# sourceMappingURL=about.95fa2ddb.js.map

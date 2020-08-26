@@ -72,7 +72,9 @@
       "comma-spacing": "off",
       "padded-blocks": "off",
       "comma-dangle": "off",
-      "dot-notation": "off"
+      "dot-notation": "off",
+      "no-trailing-spaces": "off",
+      "block-spacing": "off"
     }
   },
   "browserslist": [

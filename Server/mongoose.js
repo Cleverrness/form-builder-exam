@@ -85,7 +85,7 @@ async function get_next_form_id() {
 async function add_new_form(name, host, questions)
 {
     // check if the name is string
-    if(!(name instanceof String || typeof name === 'string'))
+    if(!(name instanceof String || typeof name === 'string') || !questions)
     {
         throw {message: "error adding new form, wrong params "};
     }
@@ -94,6 +94,9 @@ async function add_new_form(name, host, questions)
     let count_forms = await get_next_form_id();
     let submit_url = host + "/forms/submit/" + count_forms;
     let submission_url = host + "/forms/submission/" + count_forms;
+
+    console.log("The form id " + count_forms)
+
 
     // build the new form
     let build_form = new form_builder_collection({

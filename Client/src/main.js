@@ -5,8 +5,7 @@ import store from './store'
 import VueAxios from "vue-axios";
 import axios from "axios";
 import VueRouter from "vue-router";
-import VueSlideoutPanel from 'vue2-slideout-panel';
-import VueSessionStorage from 'vue-sessionstorage'
+import VModal from 'vue-js-modal';
 
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
@@ -27,7 +26,8 @@ import {
   DropdownPlugin,
   ModalPlugin,
   AvatarPlugin,
-  TablePlugin ,
+  TablePlugin,
+  PopoverPlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
@@ -45,11 +45,11 @@ import {
   ModalPlugin,
   DropdownPlugin,
   AvatarPlugin,
-  TablePlugin ,
+  TablePlugin,
+  PopoverPlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
-Vue.use(VueSlideoutPanel);
-Vue.use(VueSessionStorage)
+Vue.use(VModal, {dialog: true});
 
 axios.interceptors.request.use(
   function(config) {
