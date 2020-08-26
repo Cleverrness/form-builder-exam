@@ -77,7 +77,9 @@
       "block-spacing": "off",
       "spaced-comment": "off",
       "no-useless-return": "off",
-      "camelcase": "off"
+      "camelcase": "off",
+      "space-infix-ops": "off",
+      "space-in-parens": "off"
     }
   },
   "browserslist": [

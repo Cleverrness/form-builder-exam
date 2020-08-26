@@ -12,17 +12,14 @@
         <b-button variant="link" @click="openSubmitForm(data.item.id)" :key="data.item.id">Submit to this form</b-button>
       </template>
       <template v-slot:cell(LinkToSubmission)="data">
-        <b-button variant="link" @click="showSubmissionModal = !showSubmissionModal" :key="data.item.id">View all Submissions of this form</b-button>
+        <b-button variant="link" @click="showSubmissions(data.item.id)" :key="data.item.id">View all Submissions of this form</b-button>
       </template>
     </b-table>
 
     <!--Submission Modal -->
     <!--TODO: maybe change to page-->
     <b-modal v-model="showSubmissionModal" hide-footer title="Using Component Methods">
-      <div class="d-block text-center">
-        <h3>Hello From Submission Modal!</h3>
-      </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="showSubmissionModal = !showSubmissionModal">Close Me</b-button>
+
     </b-modal>
 
     <!--Submit Modal -->
@@ -107,10 +104,9 @@
       {
         this.showSubmitModal = false;
       },
-      handleResize() {
-        if(window.innerWidth <= 769){
-
-        }
+      showSubmissions(selected_form_id)
+      {
+        this.$router.push('/Submissions/'+selected_form_id);
       }
     },
     mounted() {

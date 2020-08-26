@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/NewForm">Add New Form</router-link>
+      <router-link to="/NewForm">Add New Form</router-link> |
+      <router-link to="/Submissions">Submissions</router-link>
     </div>
     <router-view/>
   </div>
