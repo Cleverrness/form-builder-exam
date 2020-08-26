@@ -1,10 +1,8 @@
 <template>
   <div>
-    <!--Button for creating new form -->
-    <b-button block pill variant="info" sticky-header class="new-form-btn" @click="showModal">Add new form</b-button>
-
     <!--Forms table showing all forms from the DB -->
-    <b-table striped hover stacked="md" :items="allForms" outlined no-border-collapse>
+    <!--TODO: create component inorder to decide which table to use, stacked table or stick-header-->
+    <b-table striped hover :items="allForms" responsive outlined no-border-collapse>
       <template v-slot:cell(LinkToSubmit)="data">
         <b-button variant="link" @click="openSubmitForm(data.item.id)" :key="data.item.id">Submit to this form</b-button>
       </template>
@@ -34,15 +32,6 @@
         <selected-form @form-na="closeModal" :form_id="selectedFormId">Hello From Submit Modal!</selected-form>
       </div>
     </b-modal>
-
-    <modal
-      name="new-form-modal"
-      :width="350"
-      :height="600"
-      :draggable="true"
-    >
-    <new-form></new-form>
-    </modal>
 
 
   </div>
@@ -106,7 +95,6 @@
       },
       async openSubmitForm(id)
       {
-        console.log(id);
         this.selectedFormId = id;
         this.showSubmitModal = true;
       },
@@ -114,13 +102,16 @@
       {
         this.showSubmitModal = false;
       },
-      showModal()
-      {
-        this.$modal.show('new-form-modal')
+      handleResize() {
+        if(window.innerWidth <= 769){
+
+        }
       }
     },
     mounted() {
       this.updateTable();
+      console.log("windows size = " + JSON.stringify(window.innerWidth));
+      window.addEventListener('resize', this.handleResize);
     },
     components: {
       selectedForm,

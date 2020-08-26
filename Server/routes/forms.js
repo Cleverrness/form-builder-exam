@@ -29,8 +29,10 @@ router.get("/all_forms", async (req,res,next) => {
  * the form parameters (question and name) should be implemented in the req body
  */
 router.post("/new_form", async (req, res, next) => {
+    console.log("req.body=" + req.body)
     let {name, questions} = req.body;
     let {host} = req.headers;
+    console.log("adding new form " + name + questions)
     try{
         await mongoose.add_new_form(name, host, questions);
         res.sendStatus(200);
