@@ -74,7 +74,10 @@
       "comma-dangle": "off",
       "dot-notation": "off",
       "no-trailing-spaces": "off",
-      "block-spacing": "off"
+      "block-spacing": "off",
+      "spaced-comment": "off",
+      "no-useless-return": "off",
+      "camelcase": "off"
     }
   },
   "browserslist": [

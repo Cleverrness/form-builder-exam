@@ -1,5 +1,10 @@
 <template>
   <div>
+
+    <div v-if="!allForms">
+      <b-spinner variant="info"></b-spinner>
+    </div>
+
     <!--Forms table showing all forms from the DB -->
     <!--TODO: create component inorder to decide which table to use, stacked table or stick-header-->
     <b-table striped hover :items="allForms" responsive outlined no-border-collapse>
@@ -29,7 +34,7 @@
              button-size="sm"
              title="Submit the form">
       <div class="d-block text-center" >
-        <selected-form @form-na="closeModal" :form_id="selectedFormId">Hello From Submit Modal!</selected-form>
+        <selected-form @form-na="closeModal" @close-panel="closeModal" :form_id="selectedFormId">Hello From Submit Modal!</selected-form>
       </div>
     </b-modal>
 
