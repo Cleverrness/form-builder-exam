@@ -12,8 +12,8 @@ export default {
   name: 'Home',
   data() {
     return {
-      // urlToGetForms: "https://heroku-form-builder.herokuapp.com/forms/all_forms"
-      urlToGetForms: "http://localhost:3000/forms/all_forms"
+      urlToGetForms: "https://heroku-form-builder.herokuapp.com/forms/all_forms"
+      // urlToGetForms: "http://localhost:3000/forms/all_forms"
     };
   },
   components: {
