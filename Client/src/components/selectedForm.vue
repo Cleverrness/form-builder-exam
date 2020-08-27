@@ -62,10 +62,9 @@
       formQuestions: questions
     }
   }
-  async function submitFormAnswers(form_id, answers)
+  async function submitFormAnswers(url, form_id, answers)
   {
-    let url = "https://heroku-form-builder.herokuapp.com/forms/submit";
-    // let url = "http://localhost:3000/forms/submit";
+
     await axios
       .post(url, {
         form_id,
@@ -95,7 +94,7 @@
       }
     },
     async mounted() {
-      let formUrl = "https://heroku-form-builder.herokuapp.com/forms/submit/" + this.form_id;
+      let formUrl = this.$root.store.baseUrl + "forms/submit/" + this.form_id;
       this.questionsArray = (await getFormQuestions(formUrl)).formQuestions;
       if(!this.questionsArray)
       {
@@ -126,16 +125,15 @@
       async onSubmit(evt) {
         evt.preventDefault()
         // Submit form answers
-        let answersArray = [];
+        let formAnswers = {};
         this.questionsArray.forEach((question) => {
-          answersArray.push({
-            qName: question.name,
-            qAns: question.answer
-          })
+          formAnswers[question.name] = question.answer
         });
 
+        console.log("Form Answers = " + JSON.stringify(formAnswers))
         try{
-          await submitFormAnswers(this.form_id,answersArray);
+          let url = this.$root.store.baseUrl + "forms/submit";
+          await submitFormAnswers(url, this.form_id,formAnswers);
           this.$router.push({name: "Home"}).catch(() => {
             this.$router.go();
           });

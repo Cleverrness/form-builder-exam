@@ -32,16 +32,16 @@ const form_builder = new Schema({
 });
 
 // A Schema that represents an answer of a question in the form
-const submission_answer = new Schema({
-    qName: String,
-    qAns: String
-})
+// const submission_answer = new Schema({
+//     qName: String,
+//     qAns: String
+// })
 
 // Submissions Schema to hold all the answers of a form
 const submissions_schema = new Schema({
     form_id: Number,
-    Answers: [submission_answer]
-})
+    Answers: [Schema.Types.Mixed]
+}, {strict: false})
 
 // Create the Specific Collection
 const a_form_list = mongoose.model('allforms', form_list_schema);
@@ -173,38 +173,64 @@ async function submit_answers(form_id, answers)
     }
     else
     {
-        let appended_answers = [];
-        all_submissions.Answers.forEach((ansr) => {
-            let actual_answer = {
-                qName: ansr.qName,
-                qAns: ansr.qAns
-            }
-            appended_answers.push(actual_answer);
-        })
-
-        //Create an array of the form questoins names
+        //Create an array of the form questions names
         let form_qsts = await get_form_question(form_id);
         let question_names = [];
         form_qsts.forEach((question) => {
             question_names.push(question.name);
         });
 
+        //Create Array of already submitted answers
+        let appended_answers = all_submissions.Answers;
+        // all_submissions.Answers.forEach((ansr) => {
+        //     question_names.forEach((q_name) => {
+        //         if(ansr[q_name])
+        //         {
+        //             let actual_answer = {}
+        //             actual_answer[q_name] = ansr[q_name];
+        //             appended_answers.push(actual_answer);
+        //         }
+        //
+        //     })
+        // })
+
+
+
+
         //Append the question to the already submitted answers only if the question name belongs to this form
-        answers.forEach((new_ansr) => {
-            if(!question_names.includes(new_ansr.qName))
-            {
-                throw {message: "Question name does not belong to this form"}
-            }
-            appended_answers.push(new_ansr);
-        })
+        // Object.keys(answers).forEach((ansr_name) => {
+        //
+        // })
+        if(!checkIncludesAll(Object.keys(answers), question_names))
+        {
+            throw {message: "Question name does not belong to this form"}
+        }
+        appended_answers.push(answers);
+
 
         //Update the submissions
         await submissions_collection.findOneAndUpdate({form_id: form_id}, {Answers: appended_answers});
-        await update_submission_number(form_id);
+
 
 
     }
+    await update_submission_number(form_id);
 }
+
+/**
+ * this functions will check
+ * @param included - the array to check if it is included in the other array
+ * @param inclusive - the array to check if it contains the other array
+ * @returns {boolean}
+ */
+function checkIncludesAll(included, inclusive){
+    for(var i = 0; i < included.length; i++){
+        if(inclusive.indexOf(included[i]) === -1)
+            return false;
+    }
+    return true;
+}
+
 
 /**
  * This function is incrementing the number of applied submissions
@@ -228,15 +254,10 @@ async function get_submissions_by_id(form_id)
     const all_submissions = await submissions_collection.findOne({form_id: form_id}).lean();
 
     //Beautify the Answers array
-    let answers = [];
-    all_submissions.Answers.forEach((answer) => {
-        answers.push({
-            qName: answer.qName,
-            qAns: answer.qAns
-        })
-    });
+    let answers = all_submissions.Answers;
 
-    return answers;
+
+    return answers
 }
 
 module.exports = {mongoose, add_new_form, get_all_forms, get_form_question, submit_answers, get_submissions_by_id}

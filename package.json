@@ -15,6 +15,7 @@
     "mongoose": "^5.10.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
-    "vue-js-modal": "^2.0.0-rc.6"
+    "vue-js-modal": "^2.0.0-rc.6",
+    "vuetify": "^2.3.10"
   }
 }

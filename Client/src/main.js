@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 import VueAxios from "vue-axios";
 import axios from "axios";
 import VueRouter from "vue-router";
 import VModal from 'vue-js-modal';
+import Vuetify from 'vuetify'
 
 import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
@@ -49,6 +49,7 @@ import {
   PopoverPlugin,
 ].forEach((x) => Vue.use(x));
 Vue.use(Vuelidate);
+Vue.use(Vuetify);
 Vue.use(VModal, {dialog: true});
 
 axios.interceptors.request.use(
@@ -79,8 +80,19 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false
 
+const shared_data = {
+  baseUrl: "https://heroku-form-builder.herokuapp.com/"
+  // baseUrl: "http://localhost:3000/"
+}
+
+
 new Vue({
   router,
-  store,
+  data() {
+    return {
+      store: shared_data
+    }
+  },
+  vuetify: new Vuetify(),
   render: h => h(App)
 }).$mount('#app')

@@ -47,8 +47,7 @@
   import axios from "axios";
 
   async function submitForm(formName, questionsToSubmit) {
-    let url = 'https://heroku-form-builder.herokuapp.com/forms/new_form/';
-    // let url = 'http://localhost:3000/forms/new_form/';
+    let url = this.$root.store.baseUrl + "forms/new_form/";
     await axios.post(url,{
         name: formName,
         questions: questionsToSubmit

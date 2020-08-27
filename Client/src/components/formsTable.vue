@@ -4,25 +4,28 @@
     <div v-if="!allForms">
       <b-spinner variant="info"></b-spinner>
     </div>
+    <div v-else-if="allForms.length === 0">
+      <h2>There are no forms yet</h2>
+      <h4>Please add one using the 'Add New Form' page.</h4>
+    </div>
 
     <!--Forms table showing all forms from the DB -->
     <!--TODO: create component inorder to decide which table to use, stacked table or stick-header-->
-    <b-table striped hover :items="allForms" responsive outlined no-border-collapse>
+    <b-table striped hover :items="allForms" stacked="md" outlined no-border-collapse>
       <template v-slot:cell(LinkToSubmit)="data">
         <b-button variant="link" @click="openSubmitForm(data.item.id)" :key="data.item.id">Submit to this form</b-button>
       </template>
       <template v-slot:cell(LinkToSubmission)="data">
-        <b-button variant="link" @click="showSubmissionModal = !showSubmissionModal" :key="data.item.id">View all Submissions of this form</b-button>
+        <router-link :to="`/Submissions/${data.item.id}`">
+          <b-button variant="link" :key="data.item.id">View all Submissions of this form</b-button>
+        </router-link>
       </template>
     </b-table>
 
     <!--Submission Modal -->
     <!--TODO: maybe change to page-->
     <b-modal v-model="showSubmissionModal" hide-footer title="Using Component Methods">
-      <div class="d-block text-center">
-        <h3>Hello From Submission Modal!</h3>
-      </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="showSubmissionModal = !showSubmissionModal">Close Me</b-button>
+
     </b-modal>
 
     <!--Submit Modal -->
@@ -85,7 +88,7 @@
             label: 'Submission'
           }
         ],
-        allForms: [],
+        allForms: null,
         showSubmissionModal: false,
         showSubmitModal: false,
         selectedFormId: null,
@@ -107,11 +110,10 @@
       {
         this.showSubmitModal = false;
       },
-      handleResize() {
-        if(window.innerWidth <= 769){
-
-        }
-      }
+      // showSubmissions(selected_form_id)
+      // {
+      //   this.$router.push('/Submissions/'+selected_form_id);
+      // }
     },
     mounted() {
       this.updateTable();

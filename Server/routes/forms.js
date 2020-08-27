@@ -64,7 +64,7 @@ router.get("/submit/:form_id", async (req, res, next) =>{
 router.post("/submit", async (req,res,next) => {
     try{
         let {form_id,answers} = req.body;
-        if(!form_id || !answers)
+        if(form_id < 0 || form_id === null || !answers)
         {
             throw {message: "Wrong parameters received"}
         }
@@ -91,6 +91,31 @@ router.get("/submission/:form_id", async (req, res, next) => {
         res.status(200).send(answers);
 
     }catch (error) {
+        next(error)
+    }
+})
+
+router.get("/form_name/:form_id", async (req, res, next) => {
+    try{
+        const {form_id} = req.params;
+        const allForms = await mongoose.get_all_forms();
+        let form_name = "";
+
+        allForms.forEach((form) => {
+            if(form.id === parseInt(form_id))
+            {
+                form_name = form.name;
+            }
+        });
+
+        if(!form_name)
+        {
+            throw {message: "Form id not found"}
+        }
+
+        res.status(200).send(form_name);
+    }
+    catch (error) {
         next(error)
     }
 })

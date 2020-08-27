@@ -13,10 +13,17 @@ const routes = [
   {
     path: '/NewForm',
     name: 'New Form Page',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/NewFormPage.vue')
+    component: () => import('../views/NewFormPage.vue')
+  },
+  {
+    path: '/Submissions',
+    name: 'Submissions Page',
+    component: () => import('../views/Submissions.vue')
+  },
+  {
+    path: '/Submissions/:formId',
+    name: 'Submission Page',
+    component: () => import('../views/Submissions.vue')
   },
   {
     path: "*",
