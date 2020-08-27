@@ -173,37 +173,40 @@ async function submit_answers(form_id, answers)
     }
     else
     {
-        //Create an array of the form questoins names
+        //Create an array of the form questions names
         let form_qsts = await get_form_question(form_id);
         let question_names = [];
         form_qsts.forEach((question) => {
             question_names.push(question.name);
         });
 
-        let appended_answers = [];
-        all_submissions.Answers.forEach((ansr) => {
-            question_names.forEach((q_name) => {
-                if(ansr[q_name])
-                {
-                    let actual_answer = {}
-                    actual_answer[q_name] = ansr[q_name];
-                    appended_answers.push(actual_answer);
-                }
-
-            })
-        })
+        //Create Array of already submitted answers
+        let appended_answers = all_submissions.Answers;
+        // all_submissions.Answers.forEach((ansr) => {
+        //     question_names.forEach((q_name) => {
+        //         if(ansr[q_name])
+        //         {
+        //             let actual_answer = {}
+        //             actual_answer[q_name] = ansr[q_name];
+        //             appended_answers.push(actual_answer);
+        //         }
+        //
+        //     })
+        // })
 
 
 
 
         //Append the question to the already submitted answers only if the question name belongs to this form
-        answers.forEach((new_ansr) => {
-            if(!checkIncludesAll(Object.keys(new_ansr), question_names))
-            {
-                throw {message: "Question name does not belong to this form"}
-            }
-            appended_answers.push(new_ansr);
-        })
+        // Object.keys(answers).forEach((ansr_name) => {
+        //
+        // })
+        if(!checkIncludesAll(Object.keys(answers), question_names))
+        {
+            throw {message: "Question name does not belong to this form"}
+        }
+        appended_answers.push(answers);
+
 
         //Update the submissions
         await submissions_collection.findOneAndUpdate({form_id: form_id}, {Answers: appended_answers});

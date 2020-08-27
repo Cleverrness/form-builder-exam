@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 import VueAxios from "vue-axios";
 import axios from "axios";
 import VueRouter from "vue-router";
@@ -81,9 +80,19 @@ Vue.use(VueAxios, axios);
 
 Vue.config.productionTip = false
 
+const shared_data = {
+  baseUrl: "https://heroku-form-builder.herokuapp.com/"
+  // baseUrl: "http://localhost:3000/"
+}
+
+
 new Vue({
   router,
-  store,
+  data() {
+    return {
+      store: shared_data
+    }
+  },
   vuetify: new Vuetify(),
   render: h => h(App)
 }).$mount('#app')

@@ -1,19 +1,19 @@
 <template>
-  <div>
+  <div class="centered">
     <b-form-select
       v-model="form_id"
       :options="allFormsIds"
       autofocus
       @change="setAnswersOfForm"
       size="md"
-      style="width: 30%; align-content: center;">
+      class="select">
       <template v-slot:first>
         <b-form-select-option :value="null" disabled>-- Please select a form first --</b-form-select-option>
       </template>
     </b-form-select>
-
-    <div v-show="form_id" class="d-flex justify-center mb-6">
-      <b-table :items="answers" style="width: 80%;"></b-table>
+    <h3 v-if="form_id != null">{{formName}} Answers</h3>
+    <div v-show="form_id >= 0">
+      <b-table striped hover stacked="md" outlined no-border-collapse :items="answers"></b-table>
     </div>
   </div>
 </template>
@@ -22,10 +22,9 @@
 
   import axios from "axios";
 
-  async function getAnswers(form_id) {
+  async function getAnswers(url) {
     let answers;
-    // let url = "https://heroku-form-builder.herokuapp.com/forms/submission/" + form_id;
-    let url = "http://localhost:3000/forms/submission/" + form_id;
+
     await axios
       .get(url)
       .then(response => {
@@ -37,11 +36,10 @@
     return answers
   }
 
-  async function getForms() {
+  async function getForms(url) {
     let forms = [];
     let forms_id = [];
-    // let url = "https://heroku-form-builder.herokuapp.com/forms/submission/" + form_id;
-    let url = "http://localhost:3000/forms/all_forms";
+
     await axios
       .get(url)
       .then(response => {
@@ -56,6 +54,20 @@
     return forms_id
   }
 
+  async function getFormName(url) {
+    let name = "";
+
+    await axios
+      .get(url)
+      .then(response => {
+        console.log("name is = " + JSON.stringify(response.data))
+        name = response.data;
+        return name;
+      }).catch(response=> console.log("This form does not exists"))
+
+    return name;
+  }
+
 
   export default {
     name: "Submissions.vue",
@@ -63,26 +75,42 @@
       return {
         form_id: this.$route.params.formId ? this.$route.params.formId : null,
         answers: [],
-        allFormsIds: []
+        allFormsIds: [],
+        formName: "",
       }
     },
     async mounted() {
-      this.allFormsIds = await getForms();
-      if(this.form_id)
+      let url = this.$root.store.baseUrl + "forms/all_forms";
+      this.allFormsIds = await getForms(url);
+      if(this.form_id || this.form_id === 0)
       {
         await this.setAnswersOfForm()
       }
     },
     methods: {
       async setAnswersOfForm() {
-        const response = await getAnswers(this.form_id);
+        let url = this.$root.store.baseUrl + "forms/submission/" + this.form_id;
+        const response = await getAnswers(url);
         console.log("Got the response=")
         this.answers = JSON.parse(JSON.stringify(response))
+        let nameUrl = this.$root.store.baseUrl + "forms/form_name/" + this.form_id;
+        const name = await getFormName(nameUrl);
+        console.log("Function Name is = " + name);
+
+        this.formName = name;
       }
     }
   }
 </script>
 
 <style scoped>
-
+  .centered {
+    width: 85%;
+    left: 0;
+    transform: translateX(10%);
+  }
+  .select {
+    width: 30%;
+    margin-bottom: 20px;
+  }
 </style>

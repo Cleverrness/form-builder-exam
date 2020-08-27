@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: '/Submissions/:formId',
-    name: 'Form Submission Page',
+    name: 'Submission Page',
     component: () => import('../views/Submissions.vue')
   },
   {
