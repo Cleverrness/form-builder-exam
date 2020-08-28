@@ -13,7 +13,7 @@
     </b-form-select>
     <div v-if="form_id != null && form_id >= 0" >
       <h3>{{heading}}</h3>
-      <b-table v-if="answers.length > 0" striped hover stacked="md" outlined no-border-collapse :items="answers"></b-table>
+      <b-table v-if="answers.length > 0" dark striped hover stacked="md" outlined no-border-collapse :items="answers"></b-table>
       <h4 v-else>No Submissions Yet</h4>
     </div>
   </div>
