@@ -1,8 +1,14 @@
 <template>
   <div class="bg-gra-01 page-wrapper p-t">
-
-    <h3>Add a new Form</h3>
-    <h4>Please Add your fields:</h4>
+    <div id="new-form-header">
+      <h3>Add a new Form</h3>
+      <h4>Please Add your fields:</h4>
+      <div id="nameDiv">
+        <b-form-input autocomplete="off" type="text" v-model="formName" placeholder="Name this form" size="sm" id="formName" :class="isDanger"
+                      v-b-popover.hover.top=""
+        ></b-form-input>
+      </div>
+    </div>
     <div class="inputs">
       <div class="label">
         <!--        <label for="labelTag">Label</label>-->
@@ -21,7 +27,7 @@
           <!--          <option v-for="(type,index) in availableTypes" :key="index">{{type}}</option>-->
         </b-form-select>
       </div>
-      <b-button class="plus-btn" v-b-popover.hover.top="'Add another field'" variant="secondary" @click="addField" size="md">+</b-button>
+      <b-button class="plus-btn" v-b-popover.hover.top="'Add another field'" variant="secondary" @click="addField" size="lg">+</b-button>
     </div>
 
     <b-table striped hover stacked="md" :fields="fields" :items="questions" class="fields-table" outlined no-border-collapse>
@@ -30,17 +36,15 @@
       </template>
     </b-table>
 
-    <div class="buttons-grp">
-      <!--Buttons-->
-      <div id="nameDiv">
-        <b-form-input autocomplete="off" type="text" v-model="formName" placeholder="Name this form" size="sm" id="formName" :class="isDanger"
-                      v-b-popover.hover.top=""
-        ></b-form-input>
+    <!--Buttons-->
+    <div id="submit-cancel-div">
+      <div class="cancelBtn">
+        <b-button pill size="md" variant="danger" @click="cancel" >Cancel</b-button>
       </div>
-      <b-button pill size="sm" variant="danger" @click="cancel" >Cancel</b-button>
-      <b-button pill size="sm" variant="success" class="add-form-btn" @click="submitNewForm">Add Form</b-button>
+      <div class="submitBtn">
+        <b-button pill size="md" variant="success" class="add-form-btn" @click="submitNewForm">Add Form</b-button>
+      </div>
     </div>
-
     <b-popover id="formNamePop" :show.sync="showPopOver" target="formName" variant="danger" placement="top" delay="5">
       Please fill form Name!
     </b-popover>
@@ -230,6 +234,19 @@
     text-align: center;
   }
 
+
+
+  /*#new-form-header{*/
+  /*  width: 85%;*/
+  /*}*/
+
+  #nameDiv{
+    position: relative;
+    width: 50%;
+    left: 0;
+    transform: translateX(60%);
+  }
+
   .select-font-bold{
     font-weight: bold;
   }
@@ -261,6 +278,30 @@
 
     }
 
+    #submit-cancel-div {
+      display: flex;
+      position: relative;
+      flex-direction: row;
+      padding: 10px;
+    }
+    .submitBtn{
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      /*margin-bottom: 20px;*/
+      margin-right: 20px;
+    }
+    .cancelBtn{
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      /*margin-bottom: 20px;*/
+      margin-left: 20px;
+    }
+
+    .fields-table {
+      margin-bottom: 20px;
+    }
     #typeTag{
       margin-right: 130px;
     }
@@ -269,17 +310,6 @@
       margin-bottom: 10px;
       text-align: center;
 
-    }
-    #nameDiv{
-      padding-left: 15%;
-    }
-
-    .buttons-grp {
-      position: relative;
-      bottom: 0;
-      right: 0;
-      padding-bottom: 10px;
-      padding-left: 50%;
     }
 
     .add-form-btn {
@@ -302,22 +332,27 @@
       margin: 30px 0;
     }
 
+    .submitBtn{
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-top: 20px;
+      margin-right: 20px;
+    }
+    .cancelBtn{
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+    #submit-cancel-div {
+      position: inherit;
+    }
 
     #formName{
       margin-bottom: 10px;
       text-align: center;
-    }
-
-    .buttons-grp {
-      position: relative;
-      bottom: 0;
-      right: 0;
-      padding-top: 20%;
-      margin-left: 130px;
-    }
-
-    #nameDiv{
-      padding-left: 10%;
     }
 
     .add-form-btn {
