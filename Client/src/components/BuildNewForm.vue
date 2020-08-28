@@ -1,8 +1,14 @@
 <template>
   <div class="bg-gra-01 page-wrapper p-t">
-
-    <h3>Add a new Form</h3>
-    <h4>Please Add your fields:</h4>
+    <div id="new-form-header">
+      <h3>Add a new Form</h3>
+      <h4>Please Add your fields:</h4>
+      <div id="nameDiv">
+        <b-form-input autocomplete="off" type="text" v-model="formName" placeholder="Name this form" size="sm" id="formName" :class="isDanger"
+                      v-b-popover.hover.top=""
+        ></b-form-input>
+      </div>
+    </div>
     <div class="inputs">
       <div class="label">
         <!--        <label for="labelTag">Label</label>-->
@@ -14,14 +20,14 @@
       </div>
       <div class="type">
         <!--        <label for="typeTag">Type</label>-->
-        <b-form-select v-model="selectedType" :options="availableTypes" size="sm" id="typeTag">-->
+        <b-form-select v-model="selectedType" :options="availableTypes" size="sm" @change="applyClass" :class="applyFont" id="typeTag">-->
           <template v-slot:first>
-            <b-form-select-option value="null" disabled>-- Please select inpute Type --</b-form-select-option>
+            <b-form-select-option value="null" disabled >Please select input Type</b-form-select-option>
           </template>
           <!--          <option v-for="(type,index) in availableTypes" :key="index">{{type}}</option>-->
         </b-form-select>
       </div>
-      <b-button class="plus-btn" v-b-popover.hover.top="'Add another field'" variant="secondary" @click="addField" size="md">+</b-button>
+      <b-button class="plus-btn" v-b-popover.hover.top="'Add another field'" variant="secondary" @click="addField" size="lg">+</b-button>
     </div>
 
     <b-table striped hover stacked="md" :fields="fields" :items="questions" class="fields-table" outlined no-border-collapse>
@@ -30,16 +36,15 @@
       </template>
     </b-table>
 
-    <b-container class="buttons-grp">
-      <!--Buttons-->
-      <b-form-input autocomplete="off" type="text" v-model="formName" placeholder="Name this form" size="sm" id="formName" :class="isDanger"
-                    v-b-popover.hover.top=""
-      ></b-form-input>
-
-      <b-button pill size="md" variant="danger" @click="cancel" >Cancel</b-button>
-      <b-button pill size="md" variant="success" class="add-form-btn" @click="submitNewForm">Add Form</b-button>
-    </b-container>
-
+    <!--Buttons-->
+    <div id="submit-cancel-div">
+      <div class="cancelBtn">
+        <b-button pill size="md" variant="danger" @click="cancel" >Cancel</b-button>
+      </div>
+      <div class="submitBtn">
+        <b-button pill size="md" variant="success" class="add-form-btn" @click="submitNewForm">Add Form</b-button>
+      </div>
+    </div>
     <b-popover id="formNamePop" :show.sync="showPopOver" target="formName" variant="danger" placement="top" delay="5">
       Please fill form Name!
     </b-popover>
@@ -97,7 +102,8 @@
             key: "delete",
             label: ""
           },
-        ]
+        ],
+        applyFont: ""
       }
     },
     filters: {
@@ -124,6 +130,9 @@
       {
         console.log(fieldIndex);
         this.questions.splice(fieldIndex,1);
+      },
+      applyClass() {
+        this.applyFont = "select-font-bold";
       },
       resetInputs(){
         this.fieldName = "";
@@ -191,6 +200,9 @@
   h4 {
     left: 0;
   }
+  .mustFill-red {
+    border: 2px solid red;
+  }
   .bg-gra-01 {
 
     background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);
@@ -206,6 +218,9 @@
     border-radius: 20px;
     margin-bottom: 20px;
   }
+  input{
+    font-weight: bold;
+  }
   input, select{
     outline: none;
     margin: 0;
@@ -216,6 +231,28 @@
     font-family: inherit;
     border: 1px solid;
     border-radius: 20px;
+    text-align: center;
+  }
+
+
+
+  /*#new-form-header{*/
+  /*  width: 85%;*/
+  /*}*/
+
+  #nameDiv{
+    position: relative;
+    width: 50%;
+    left: 0;
+    transform: translateX(60%);
+  }
+
+  .select-font-bold{
+    font-weight: bold;
+  }
+
+  input::-webkit-input-placeholder {
+    font-weight: lighter;
   }
   input:focus{
     outline: none;
@@ -227,6 +264,7 @@
       position: relative;
       transform: translateX(10%);
 
+
     }
 
     .plus-btn{
@@ -237,22 +275,41 @@
     .inputs div {
       position: relative;
       margin: 30px 20px;
+
     }
 
+    #submit-cancel-div {
+      display: flex;
+      position: relative;
+      flex-direction: row;
+      padding: 10px;
+    }
+    .submitBtn{
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      /*margin-bottom: 20px;*/
+      margin-right: 20px;
+    }
+    .cancelBtn{
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      /*margin-bottom: 20px;*/
+      margin-left: 20px;
+    }
+
+    .fields-table {
+      margin-bottom: 20px;
+    }
     #typeTag{
       margin-right: 130px;
     }
 
     #formName{
       margin-bottom: 10px;
-    }
+      text-align: center;
 
-    .buttons-grp {
-      position: relative;
-      bottom: 0;
-      right: 0;
-      padding-bottom: 10px;
-      padding-left: 50%;
     }
 
     .add-form-btn {
@@ -275,17 +332,27 @@
       margin: 30px 0;
     }
 
+    .submitBtn{
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin-top: 20px;
+      margin-right: 20px;
+    }
+    .cancelBtn{
+      position: absolute;
+      left: 0;
+      top: 0;
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+    #submit-cancel-div {
+      position: inherit;
+    }
 
     #formName{
       margin-bottom: 10px;
-    }
-
-    .buttons-grp {
-      position: relative;
-      bottom: 0;
-      right: 0;
-      padding-bottom: 10px;
-      padding-left: 50%;
+      text-align: center;
     }
 
     .add-form-btn {
