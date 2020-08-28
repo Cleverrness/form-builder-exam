@@ -11,7 +11,7 @@
 
     <!--Forms table showing all forms from the DB -->
     <!--TODO: create component inorder to decide which table to use, stacked table or stick-header-->
-    <b-table striped hover :items="allForms" stacked="md" outlined no-border-collapse>
+    <b-table striped hover :items="allForms" :fields="fields" stacked="md" outlined no-border-collapse>
       <template v-slot:cell(LinkToSubmit)="data">
         <b-button variant="link" @click="openSubmitForm(data.item.id)" :key="data.item.id">Submit to this form</b-button>
       </template>
@@ -79,13 +79,24 @@
       return {
         fields: [
           {
+            key: 'id',
+            label: 'ID',
+          },
+          {
+            key: 'name',
+            label: 'Form Name',
+          },
+          {
+            key: 'numOfSubmissions',
+            label: '# Submitted Answers',
+          },
+          {
             key: 'LinkToSubmit',
             label: 'Submit',
-            formatter: 'fullName'
           },
           {
             key: 'LinkToSubmission',
-            label: 'Submission'
+            label: 'Submissions'
           }
         ],
         allForms: null,

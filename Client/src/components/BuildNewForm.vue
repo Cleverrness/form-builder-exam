@@ -46,8 +46,7 @@
 <script>
   import axios from "axios";
 
-  async function submitForm(formName, questionsToSubmit) {
-    let url = this.$root.store.baseUrl + "forms/new_form/";
+  async function submitForm(url, formName, questionsToSubmit) {
     await axios.post(url,{
         name: formName,
         questions: questionsToSubmit
@@ -136,7 +135,9 @@
           this.showPopOver = true;
         }
         else{
-          submitForm(this.formName, this.questions).then((response) => {
+          let url = this.$root.store.baseUrl + "forms/new_form/";
+
+          submitForm(url, this.formName, this.questions).then((response) => {
             console.log(response);
             this.$router.push('/');
           })

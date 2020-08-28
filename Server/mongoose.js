@@ -14,8 +14,8 @@ const form_list_schema = new Schema({
     id:  Number, // String is shorthand for {type: String}
     name: String,
     numOfSubmissions:   Number,
-    LinkToSubmit: String,
-    LinkToSubmission: String
+    // LinkToSubmit: String,
+    // LinkToSubmission: String
 });
 
 // A Schema that represents a question in a form
@@ -92,8 +92,6 @@ async function add_new_form(name, host, questions)
     //TODO: deal with the race condition of 2 or more users adding new form on the same time
     //get the id for the new form and the relevant urls
     let count_forms = await get_next_form_id();
-    let submit_url = host + "/forms/submit/" + count_forms;
-    let submission_url = host + "/forms/submission/" + count_forms;
 
     console.log("The form id " + count_forms)
 
@@ -109,8 +107,6 @@ async function add_new_form(name, host, questions)
         id: count_forms,
         name: name,
         numOfSubmissions: 0,
-        LinkToSubmission: submission_url,
-        LinkToSubmit: submit_url
     })
 
     // save to DB
@@ -251,13 +247,18 @@ async function update_submission_number(form_id)
  */
 async function get_submissions_by_id(form_id)
 {
-    const all_submissions = await submissions_collection.findOne({form_id: form_id}).lean();
+    try{
+        const all_submissions = await submissions_collection.findOne({form_id: form_id}).lean();
 
-    //Beautify the Answers array
-    let answers = all_submissions.Answers;
+        //Beautify the Answers array
+        let answers = all_submissions.Answers;
 
+        return answers
+    }
+    catch (e) {
+        throw {message: "No Matching submissions"}
+    }
 
-    return answers
 }
 
 module.exports = {mongoose, add_new_form, get_all_forms, get_form_question, submit_answers, get_submissions_by_id}
