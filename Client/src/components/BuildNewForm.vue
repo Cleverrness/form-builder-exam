@@ -14,9 +14,9 @@
       </div>
       <div class="type">
         <!--        <label for="typeTag">Type</label>-->
-        <b-form-select v-model="selectedType" :options="availableTypes" size="sm" id="typeTag">-->
+        <b-form-select v-model="selectedType" :options="availableTypes" size="sm" @change="applyClass" :class="applyFont" id="typeTag">-->
           <template v-slot:first>
-            <b-form-select-option value="null" disabled>-- Please select inpute Type --</b-form-select-option>
+            <b-form-select-option value="null" disabled >Please select input Type</b-form-select-option>
           </template>
           <!--          <option v-for="(type,index) in availableTypes" :key="index">{{type}}</option>-->
         </b-form-select>
@@ -30,15 +30,16 @@
       </template>
     </b-table>
 
-    <b-container class="buttons-grp">
+    <div class="buttons-grp">
       <!--Buttons-->
-      <b-form-input autocomplete="off" type="text" v-model="formName" placeholder="Name this form" size="sm" id="formName" :class="isDanger"
-                    v-b-popover.hover.top=""
-      ></b-form-input>
-
-      <b-button pill size="md" variant="danger" @click="cancel" >Cancel</b-button>
-      <b-button pill size="md" variant="success" class="add-form-btn" @click="submitNewForm">Add Form</b-button>
-    </b-container>
+      <div id="nameDiv">
+        <b-form-input autocomplete="off" type="text" v-model="formName" placeholder="Name this form" size="sm" id="formName" :class="isDanger"
+                      v-b-popover.hover.top=""
+        ></b-form-input>
+      </div>
+      <b-button pill size="sm" variant="danger" @click="cancel" >Cancel</b-button>
+      <b-button pill size="sm" variant="success" class="add-form-btn" @click="submitNewForm">Add Form</b-button>
+    </div>
 
     <b-popover id="formNamePop" :show.sync="showPopOver" target="formName" variant="danger" placement="top" delay="5">
       Please fill form Name!
@@ -97,7 +98,8 @@
             key: "delete",
             label: ""
           },
-        ]
+        ],
+        applyFont: ""
       }
     },
     filters: {
@@ -124,6 +126,9 @@
       {
         console.log(fieldIndex);
         this.questions.splice(fieldIndex,1);
+      },
+      applyClass() {
+        this.applyFont = "select-font-bold";
       },
       resetInputs(){
         this.fieldName = "";
@@ -191,6 +196,9 @@
   h4 {
     left: 0;
   }
+  .mustFill-red {
+    border: 2px solid red;
+  }
   .bg-gra-01 {
 
     background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);
@@ -206,6 +214,9 @@
     border-radius: 20px;
     margin-bottom: 20px;
   }
+  input{
+    font-weight: bold;
+  }
   input, select{
     outline: none;
     margin: 0;
@@ -216,6 +227,15 @@
     font-family: inherit;
     border: 1px solid;
     border-radius: 20px;
+    text-align: center;
+  }
+
+  .select-font-bold{
+    font-weight: bold;
+  }
+
+  input::-webkit-input-placeholder {
+    font-weight: lighter;
   }
   input:focus{
     outline: none;
@@ -227,6 +247,7 @@
       position: relative;
       transform: translateX(10%);
 
+
     }
 
     .plus-btn{
@@ -237,6 +258,7 @@
     .inputs div {
       position: relative;
       margin: 30px 20px;
+
     }
 
     #typeTag{
@@ -245,6 +267,11 @@
 
     #formName{
       margin-bottom: 10px;
+      text-align: center;
+
+    }
+    #nameDiv{
+      padding-left: 15%;
     }
 
     .buttons-grp {
@@ -278,14 +305,19 @@
 
     #formName{
       margin-bottom: 10px;
+      text-align: center;
     }
 
     .buttons-grp {
       position: relative;
       bottom: 0;
       right: 0;
-      padding-bottom: 10px;
-      padding-left: 50%;
+      padding-top: 20%;
+      margin-left: 130px;
+    }
+
+    #nameDiv{
+      padding-left: 10%;
     }
 
     .add-form-btn {
