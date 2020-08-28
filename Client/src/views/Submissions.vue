@@ -11,9 +11,10 @@
         <b-form-select-option :value="null" disabled>-- Please select a form first --</b-form-select-option>
       </template>
     </b-form-select>
-    <h3 v-if="form_id != null">{{formName}} Answers</h3>
-    <div v-show="form_id >= 0">
-      <b-table striped hover stacked="md" outlined no-border-collapse :items="answers"></b-table>
+    <div v-if="form_id != null && form_id >= 0" >
+      <h3>{{heading}}</h3>
+      <b-table v-if="answers.length > 0" striped hover stacked="md" outlined no-border-collapse :items="answers"></b-table>
+      <h4 v-else>No Submissions Yet</h4>
     </div>
   </div>
 </template>
@@ -31,7 +32,10 @@
         console.log(response.data)
         answers = response.data;
         return answers;
-      }).catch(response=> console.log("No answers found"))
+      }).catch(response=> {
+        console.log("No answers found");
+        return null;
+      })
 
     return answers
   }
@@ -89,15 +93,31 @@
     },
     methods: {
       async setAnswersOfForm() {
-        let url = this.$root.store.baseUrl + "forms/submission/" + this.form_id;
-        const response = await getAnswers(url);
-        console.log("Got the response=")
-        this.answers = JSON.parse(JSON.stringify(response))
         let nameUrl = this.$root.store.baseUrl + "forms/form_name/" + this.form_id;
         const name = await getFormName(nameUrl);
         console.log("Function Name is = " + name);
-
         this.formName = name;
+
+        let url = this.$root.store.baseUrl + "forms/submission/" + this.form_id;
+        const response = await getAnswers(url);
+        if(!response)
+        {
+          this.answers = [];
+        }
+        else{
+          console.log("Got the response=")
+          this.answers = JSON.parse(JSON.stringify(response))
+        }
+
+      }
+    },
+    computed: {
+      heading() {
+        if (this.formName !== "")
+        {
+          return "You are watching " + this.formName.toUpperCase() + " Submissions"
+        }
+        return ""
       }
     }
   }
