@@ -81,8 +81,8 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false
 
 const shared_data = {
-  baseUrl: "https://heroku-form-builder.herokuapp.com/"
-  // baseUrl: "http://localhost:3000/"
+  // baseUrl: "https://heroku-form-builder.herokuapp.com/"
+  baseUrl: "http://localhost:3000/"
 }
 
 

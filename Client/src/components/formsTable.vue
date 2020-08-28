@@ -11,7 +11,7 @@
 
     <!--Forms table showing all forms from the DB -->
     <!--TODO: create component inorder to decide which table to use, stacked table or stick-header-->
-    <b-table striped hover :items="allForms" :fields="fields" stacked="md" outlined no-border-collapse>
+    <b-table dark striped hover :items="allForms" :fields="fields" stacked="md" outlined no-border-collapse>
       <template v-slot:cell(LinkToSubmit)="data">
         <b-button variant="link" @click="openSubmitForm(data.item.id)" :key="data.item.id">Submit to this form</b-button>
       </template>
