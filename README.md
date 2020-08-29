@@ -24,6 +24,8 @@ If you wish to use this Web App you should first:
 1. Clone the forked repo to a folder `form-builder`
 1. Open Terminal
 1. cd into the folder `form-builder`
+1. cd into `form-builder-exam`
+1. run the command `npm install`
 1. run the command `npm run start`
 1. Open a browser and navigate to http://localhost
 
