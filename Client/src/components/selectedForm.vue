@@ -4,20 +4,21 @@
       <b-spinner variant="info"></b-spinner>
     </div>
     <div v-else-if="isError">
-      <b-alert :show="dissmissCounter" @dismiss-count-down="countDownChanged" variant="danger" @dismissed="closeModal">
+      <b-alert :show="dismissCounter" @dismiss-count-down="countDownChanged" variant="danger" @dismissed="closeModal">
         Could not find the requested form<br>
         Please try again later
       </b-alert>
     </div>
     <div v-else>
-      <h1> Form Component </h1>
-      <h2>this form is {{form_id}}</h2>
+      <h1 class="text-center">{{form_name}}</h1>
 
-      <b-form @submit="onSubmit" >
+      <b-form @submit="onSubmit" class="text-center">
         <b-form-group
-          id="input-group-1"
+          :id="`input-group-${index}`"
+          class="submit-form-group"
           v-for="(question,index) in questionsArray"
-          :label="`${question.label}`"
+          :label="`${question.label}: (${question.type})`"
+          label-align="left"
           :label-for="'input-'+`${question.label}`"
           :key="index"
         >
@@ -30,7 +31,7 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button id="submit-btn" type="submit" variant="primary">Submit</b-button>
         <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
 
@@ -83,6 +84,7 @@
     name: "selectedForm",
     props: {
       form_id: Number,
+      form_name: String
 
     },
     data() {
@@ -90,7 +92,7 @@
         questionsArray: [],
         isLoaded: false,
         isError: false,
-        dissmissCounter: 4,
+        dismissCounter: 4,
       }
     },
     async mounted() {
@@ -116,7 +118,7 @@
     },
     methods: {
       countDownChanged(dismissCountDown) {
-        this.dissmissCounter = dismissCountDown
+        this.dismissCounter = dismissCountDown
       },
       closeModal()
       {
@@ -142,16 +144,10 @@
           console.log(error);
         }
 
-
-
         this.$emit('close-panel', "success")
       }
     },
     filters: {
-      Upper(value) {
-        return value.toUpperCase();
-      },
-
       Lower(value) {
         return value.toLowerCase();
       },
@@ -161,4 +157,27 @@
 
 <style scoped>
 
+  input{
+    font-weight: bold;
+    outline: none;
+    margin: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    width: 80%;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid;
+    border-radius: 20px;
+    text-align: center;
+  }
+
+  .submit-form-group{
+    position: relative;
+    left: 15%;
+    width: 85%;
+  }
+
+  #submit-btn{
+    margin-right: 10px;
+  }
 </style>
