@@ -13,7 +13,7 @@
     <!--TODO: create component inorder to decide which table to use, stacked table or stick-header-->
     <b-table dark striped hover :items="allForms" :fields="fields" stacked="md" outlined no-border-collapse>
       <template v-slot:cell(LinkToSubmit)="data">
-        <b-button variant="link" @click="openSubmitForm(data.item.id)" :key="data.item.id">Submit to this form</b-button>
+        <b-button variant="link" @click="openSubmitForm(data.item.id, data.item.name)" :key="data.item.id">Submit to this form</b-button>
       </template>
       <template v-slot:cell(LinkToSubmission)="data">
         <router-link :to="`/Submissions/${data.item.id}`">
@@ -34,10 +34,12 @@
              centered
              no-close-on-backdrop
              hide-footer
+             content-class="submitting-page"
+             header-class="p-2 border-bottom-0"
              button-size="sm"
-             title="Submit the form">
-      <div class="d-block text-center" >
-        <selected-form @form-na="closeModal" @close-panel="closeModal" :form_id="selectedFormId">Hello From Submit Modal!</selected-form>
+             >
+      <div >
+        <selected-form @form-na="closeModal" @close-panel="closeModal" :form_name="selectedFormName" :form_id="selectedFormId">Hello From Submit Modal!</selected-form>
       </div>
     </b-modal>
 
@@ -103,6 +105,7 @@
         showSubmissionModal: false,
         showSubmitModal: false,
         selectedFormId: null,
+        selectedFormName: "",
         showAddFormModal: false
       }
     },
@@ -112,9 +115,10 @@
         const {recivedForms} = await getForms(this.url);
         this.allForms = recivedForms;
       },
-      async openSubmitForm(id)
+      async openSubmitForm(id, name)
       {
         this.selectedFormId = id;
+        this.selectedFormName = name;
         this.showSubmitModal = true;
       },
       closeModal()
@@ -140,6 +144,11 @@
 </script>
 
 <style scoped>
+
+  /deep/ .submitting-page {
+    background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);
+  }
+
   .new-form-btn {
     margin-bottom: 10px;
   }
