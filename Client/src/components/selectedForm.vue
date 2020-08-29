@@ -45,6 +45,12 @@
 
   import axios from "axios";
 
+  /**
+   * This functions is getting an array of the questions of
+   * a specific form by its ID
+   * @param url to get the questions from
+   * @returns {Promise<{formQuestions: *}>}
+   */
   async function getFormQuestions(url)
   {
     let questions;
@@ -55,7 +61,7 @@
         questions = response.data;
         return questions;
       }).catch(response=> {
-        console.log("no questions found");
+        console.log("No questions found");
         return null
       })
 
@@ -63,6 +69,14 @@
       formQuestions: questions
     }
   }
+
+  /**
+   * This functions is submitting answers to a specific form by its id
+   * @param url to submit the answers to
+   * @param form_id the id of the form that is being submitted
+   * @param answers the answers of a user for the specific form
+   * @returns {Promise<void>}
+   */
   async function submitFormAnswers(url, form_id, answers)
   {
 
@@ -96,14 +110,16 @@
       }
     },
     async mounted() {
+      // Get the questions
       let formUrl = this.$root.store.baseUrl + "forms/submit/" + this.form_id;
       this.questionsArray = (await getFormQuestions(formUrl)).formQuestions;
       if(!this.questionsArray)
       {
-        // Should Show error
+        // Could not found the questions
         this.isError = true;
       }
       else{
+        // Append key/value to each question object in the form questions
         this.isLoaded = true;
         console.log("Mounted new questions array")
         this.questionsArray.forEach((question) => {
@@ -125,6 +141,7 @@
         this.$emit('form-na')
       },
       async onSubmit(evt) {
+        // Submit the answers to the specific form
         evt.preventDefault()
         // Submit form answers
         let formAnswers = {};
@@ -132,11 +149,11 @@
           formAnswers[question.name] = question.answer
         });
 
-        console.log("Form Answers = " + JSON.stringify(formAnswers))
         try{
           let url = this.$root.store.baseUrl + "forms/submit";
           await submitFormAnswers(url, this.form_id,formAnswers);
           this.$router.push({name: "Home"}).catch(() => {
+            // On Success redirect to the Home page
             this.$router.go();
           });
         }
