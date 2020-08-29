@@ -12,6 +12,10 @@
 </template>
 
 <style lang="scss">
+  @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+  * {
+    font-family: 'Indie Flower', cursive;
+  }
   html {
     background-image: url("../src/assets/marble-background.jpg");
     background-position: center;
