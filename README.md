@@ -1,15 +1,18 @@
 # Form Builder Task
 Welcome to the Form Builder application exam. This app is simple web application that allows the user to create a custom form to which anyone can submit answers. (Think: Google Forms)
 
-This Repo is my Form Builder app, Created using VueJS and NodeJS with express.
+This Repo is my Form Builder app.
+
+Created using: 
+
+    - VueJS.
+    - NodeJS with express.
+    - MongoDB.
+    
 ### Author: Gal Rosenthal
 
 # Instructions
-
 1. [Start](#TheStartingProcess)
-    1. [Web App](#WebApp)
-    1. [Server-Side only](#ServerSide) 
-    1. [Client-Side only](#ClientSide)
 
 <a name="TheStartingProcess"></a>
 ### Starting Process
@@ -17,27 +20,9 @@ If you wish to use this Web App you should first:
 1. Fork this repo
 1. Clone the forked repo to a folder `form-builder`
 1. Open Terminal
-
-<a name="WebApp"></a>
-## Start the project and use the Web App
-If you wish to use the project as is:
 1. cd into the folder `form-builder`
 1. run the command `npm run start`
 1. Open a browser and navigate to http://localhost
-
-<a name="ServerSide"></a>
-## Start the Server-Side only
-If you wish to use the Server-Side as a REST-Api:
-1. cd into the folder `form-builder/Server`
-1. run the command `npm run start`
-1. The rest address is `http://localhost` 
-
-<a name="ClientSide"></a>
-## Start the Client-Side only
-If you wish to use the Clien-Side:
-1. cd into the folder `form-builder/Client`
-1. run the command `npm run serve`
-1. Open a browser and navigate to http://localhost:8080
 
 ## Submitting your project
 After you've completed your tasks, and you are ready to submit it, do the following:
