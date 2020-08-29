@@ -10,7 +10,6 @@
     </div>
 
     <!--Forms table showing all forms from the DB -->
-    <!--TODO: create component inorder to decide which table to use, stacked table or stick-header-->
     <b-table dark striped hover :items="allForms" :fields="fields" stacked="md" outlined no-border-collapse>
       <template v-slot:cell(LinkToSubmit)="data">
         <b-button variant="link" @click="openSubmitForm(data.item.id, data.item.name)" :key="data.item.id">Submit to this form</b-button>
@@ -21,12 +20,6 @@
         </router-link>
       </template>
     </b-table>
-
-    <!--Submission Modal -->
-    <!--TODO: maybe change to page-->
-    <b-modal v-model="showSubmissionModal" hide-footer title="Using Component Methods">
-
-    </b-modal>
 
     <!--Submit Modal -->
     <b-modal v-model="showSubmitModal"
@@ -52,6 +45,11 @@
   import selectedForm from '@/components/selectedForm.vue';
   import newForm from '@/components/BuildNewForm.vue';
 
+  /**
+   * This function is getting all the forms from the DB
+   * @param url - the url to get forms from
+   * @returns {Promise<{recivedForms: *}>}
+   */
   async function getForms(url) {
     let forms
     await axios
@@ -66,8 +64,6 @@
       recivedForms: forms
     }
   }
-
-
 
   export default {
     name: "formsTable",
@@ -111,12 +107,13 @@
     },
     methods: {
       async updateTable(){
-        console.log("Entered updateTable()");
+        // Get the forms from the url that is injected from the parent
         const {recivedForms} = await getForms(this.url);
         this.allForms = recivedForms;
       },
       async openSubmitForm(id, name)
       {
+        // Set the submit modal props
         this.selectedFormId = id;
         this.selectedFormName = name;
         this.showSubmitModal = true;
@@ -125,15 +122,9 @@
       {
         this.showSubmitModal = false;
       },
-      // showSubmissions(selected_form_id)
-      // {
-      //   this.$router.push('/Submissions/'+selected_form_id);
-      // }
     },
     mounted() {
       this.updateTable();
-      console.log("windows size = " + JSON.stringify(window.innerWidth));
-      window.addEventListener('resize', this.handleResize);
     },
     components: {
       selectedForm,

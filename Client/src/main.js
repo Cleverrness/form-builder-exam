@@ -4,53 +4,35 @@ import router from './router'
 import VueAxios from "vue-axios";
 import axios from "axios";
 import VueRouter from "vue-router";
-import VModal from 'vue-js-modal';
-import Vuetify from 'vuetify'
 
-import Vuelidate from "vuelidate";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import {
   FormGroupPlugin,
-  FormCheckboxPlugin,
   FormPlugin,
   FormInputPlugin,
   ButtonPlugin,
-  CardPlugin,
-  NavbarPlugin,
   FormSelectPlugin,
   AlertPlugin,
   ToastPlugin,
-  LayoutPlugin,
   SpinnerPlugin,
-  DropdownPlugin,
   ModalPlugin,
-  AvatarPlugin,
   TablePlugin,
   PopoverPlugin,
 } from "bootstrap-vue";
 [
   FormGroupPlugin,
-  FormCheckboxPlugin,
   FormPlugin,
   FormInputPlugin,
   ButtonPlugin,
-  CardPlugin,
-  NavbarPlugin,
   FormSelectPlugin,
   AlertPlugin,
   ToastPlugin,
-  LayoutPlugin,
   SpinnerPlugin,
   ModalPlugin,
-  DropdownPlugin,
-  AvatarPlugin,
   TablePlugin,
   PopoverPlugin,
 ].forEach((x) => Vue.use(x));
-Vue.use(Vuelidate);
-Vue.use(Vuetify);
-Vue.use(VModal, {dialog: true});
 
 axios.interceptors.request.use(
   function(config) {
@@ -82,7 +64,7 @@ Vue.config.productionTip = false
 
 const shared_data = {
   baseUrl: "https://heroku-form-builder.herokuapp.com/"
-  // baseUrl: "http://localhost:3000/"
+  // baseUrl: "http://localhost/"
 }
 
 
@@ -93,6 +75,5 @@ new Vue({
       store: shared_data
     }
   },
-  vuetify: new Vuetify(),
   render: h => h(App)
 }).$mount('#app')

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import formsTable from '@/components/formsTable.vue'
 
 export default {

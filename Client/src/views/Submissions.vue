@@ -12,7 +12,7 @@
       </template>
     </b-form-select>
     <div v-if="form_id != null && form_id >= 0" >
-      <h3>{{heading}}</h3>
+      <h3 v-if="formName !== ''">You are watching <span id="form-name-color">{{formName| Upper}}</span> Submissions</h3>
       <b-table v-if="answers.length > 0" dark striped hover stacked="md" outlined no-border-collapse :items="answers"></b-table>
       <h4 v-else>No Submissions Yet</h4>
     </div>
@@ -23,6 +23,11 @@
 
   import axios from "axios";
 
+  /**
+   * This function is getting the answers of a specific form by its id
+   * @param url to get form answers
+   * @returns {Promise<Array>}
+   * */
   async function getAnswers(url) {
     let answers;
 
@@ -40,6 +45,11 @@
     return answers
   }
 
+  /**
+   * This function is getting the forms ids to use in the selector at the start of the page
+   * @param url to get forms
+   * @returns {Promise<Array>}
+   */
   async function getForms(url) {
     let forms = [];
     let forms_id = [];
@@ -53,11 +63,16 @@
           forms_id.push(form.id)
         })
         return forms_id;
-      }).catch(response=> console.log("No answers found"))
+      }).catch(response=> console.log("No forms found"))
 
     return forms_id
   }
 
+  /**
+   * This Function is getting the form name by its ID
+   * @param url the url to get form name
+   * @returns {Promise<string>}
+   */
   async function getFormName(url) {
     let name = "";
 
@@ -84,6 +99,7 @@
       }
     },
     async mounted() {
+      // Get the list of all forms IDs in the DB
       let url = this.$root.store.baseUrl + "forms/all_forms";
       this.allFormsIds = await getForms(url);
       if(this.form_id || this.form_id === 0)
@@ -93,11 +109,13 @@
     },
     methods: {
       async setAnswersOfForm() {
+        // Get the form name by its ID
         let nameUrl = this.$root.store.baseUrl + "forms/form_name/" + this.form_id;
         const name = await getFormName(nameUrl);
         console.log("Function Name is = " + name);
         this.formName = name;
 
+        // Get the form answers by its ID
         let url = this.$root.store.baseUrl + "forms/submission/" + this.form_id;
         const response = await getAnswers(url);
         if(!response)
@@ -111,14 +129,10 @@
 
       }
     },
-    computed: {
-      heading() {
-        if (this.formName !== "")
-        {
-          return "You are watching " + this.formName.toUpperCase() + " Submissions"
-        }
-        return ""
-      }
+    filters: {
+      Upper(value) {
+        return value.toUpperCase();
+      },
     }
   }
 </script>
@@ -132,5 +146,15 @@
   .select {
     width: 30%;
     margin-bottom: 20px;
+  }
+
+  #form-name-color{
+    background: -webkit-linear-gradient(#3f5efb, #fc466b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 </style>

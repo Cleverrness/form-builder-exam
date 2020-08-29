@@ -11,20 +11,16 @@
     </div>
     <div class="inputs">
       <div class="label">
-        <!--        <label for="labelTag">Label</label>-->
         <b-form-input autocomplete="off" v-model="fieldLabel" type="text" placeholder="Label" id="labelTag"/>
       </div>
       <div class="name">
-        <!--        <label for="nameTag">Name</label>-->
         <b-form-input autocomplete="off" v-model="fieldName" type="text" placeholder="Name" id="nameTag"/>
       </div>
       <div class="type">
-        <!--        <label for="typeTag">Type</label>-->
         <b-form-select v-model="selectedType" :options="availableTypes" size="sm" @change="applyClass" :class="applyFont" id="typeTag">-->
           <template v-slot:first>
             <b-form-select-option value="null" disabled >Please select input Type</b-form-select-option>
           </template>
-          <!--          <option v-for="(type,index) in availableTypes" :key="index">{{type}}</option>-->
         </b-form-select>
       </div>
       <b-button class="plus-btn" v-b-popover.hover.top="'Add another field'" variant="secondary" @click="addField" size="lg">+</b-button>
@@ -54,6 +50,14 @@
 <script>
   import axios from "axios";
 
+  /**
+   * This function is sending the new built form
+   * in order to submit it
+   * @param url - the url to submit the new form inorder to create it
+   * @param formName - the name of the new form
+   * @param questionsToSubmit - the questions of the new form
+   * @returns {Promise<void>}
+   */
   async function submitForm(url, formName, questionsToSubmit) {
     await axios.post(url,{
       name: formName,
@@ -115,6 +119,7 @@
     },
     methods: {
       addField() {
+        // Add another field (Question) to the form Questions Array
         console.log(this.fieldLabel && this.selectedType && this.fieldName)
         if(this.fieldLabel && this.selectedType && this.fieldName)
         {
@@ -128,6 +133,7 @@
       },
       removeField(fieldIndex)
       {
+        // Remove a field (Question) from the form
         console.log(fieldIndex);
         this.questions.splice(fieldIndex,1);
       },
@@ -151,6 +157,7 @@
 
       },
       submitNewForm() {
+        // Redirect to homepage if submitting an empty (without any question) form
         if(this.questions.length === 0)
         {
           let timeoutBeforeRedirecting = 1500;
@@ -166,10 +173,12 @@
         }
         else if (!this.formName)
         {
+          // Mark the From Name text box as a required field
           this.isDanger = "mustFill-red";
           this.showPopOver = true;
         }
         else{
+          // On Valid form, submit the new form
           let url = this.$root.store.baseUrl + "forms/new_form/";
 
           submitForm(url, this.formName, this.questions).then((response) => {
@@ -181,6 +190,7 @@
       }
     },
     mounted() {
+      // Set the popover for the name text box
       this.$root.$on('bv::popover::shown', bvEventObj => {
         setTimeout(() => this.$root.$emit('bv::hide::popover', 'formNamePop'), 2000)
       })
@@ -234,17 +244,12 @@
     text-align: center;
   }
 
-
-
-  /*#new-form-header{*/
-  /*  width: 85%;*/
-  /*}*/
-
   #nameDiv{
     position: relative;
     width: 50%;
     left: 0;
     transform: translateX(60%);
+    margin-top: 20px;
   }
 
   .select-font-bold{
@@ -263,8 +268,6 @@
     .inputs{
       position: relative;
       transform: translateX(10%);
-
-
     }
 
     .plus-btn{
@@ -274,8 +277,7 @@
 
     .inputs div {
       position: relative;
-      margin: 30px 20px;
-
+      margin: 10px 20px;
     }
 
     #submit-cancel-div {
@@ -288,14 +290,12 @@
       position: fixed;
       right: 0;
       bottom: 0;
-      /*margin-bottom: 20px;*/
       margin-right: 20px;
     }
     .cancelBtn{
       position: fixed;
       left: 0;
       bottom: 0;
-      /*margin-bottom: 20px;*/
       margin-left: 20px;
     }
 
@@ -329,7 +329,7 @@
 
     .inputs div {
       position: relative;
-      margin: 30px 0;
+      margin: 0;
     }
 
     .submitBtn{
