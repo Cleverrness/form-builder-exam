@@ -234,17 +234,12 @@
     text-align: center;
   }
 
-
-
-  /*#new-form-header{*/
-  /*  width: 85%;*/
-  /*}*/
-
   #nameDiv{
     position: relative;
     width: 50%;
     left: 0;
     transform: translateX(60%);
+    margin-top: 20px;
   }
 
   .select-font-bold{
@@ -263,8 +258,6 @@
     .inputs{
       position: relative;
       transform: translateX(10%);
-
-
     }
 
     .plus-btn{
@@ -274,8 +267,7 @@
 
     .inputs div {
       position: relative;
-      margin: 30px 20px;
-
+      margin: 10px 20px;
     }
 
     #submit-cancel-div {
@@ -288,14 +280,12 @@
       position: fixed;
       right: 0;
       bottom: 0;
-      /*margin-bottom: 20px;*/
       margin-right: 20px;
     }
     .cancelBtn{
       position: fixed;
       left: 0;
       bottom: 0;
-      /*margin-bottom: 20px;*/
       margin-left: 20px;
     }
 
@@ -329,7 +319,7 @@
 
     .inputs div {
       position: relative;
-      margin: 30px 0;
+      margin: 0;
     }
 
     .submitBtn{

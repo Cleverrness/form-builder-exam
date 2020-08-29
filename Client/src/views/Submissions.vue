@@ -12,7 +12,7 @@
       </template>
     </b-form-select>
     <div v-if="form_id != null && form_id >= 0" >
-      <h3>{{heading}}</h3>
+      <h3 v-if="formName !== ''">You are watching <span id="form-name-color">{{formName| Upper}}</span> Submissions</h3>
       <b-table v-if="answers.length > 0" dark striped hover stacked="md" outlined no-border-collapse :items="answers"></b-table>
       <h4 v-else>No Submissions Yet</h4>
     </div>
@@ -111,14 +111,10 @@
 
       }
     },
-    computed: {
-      heading() {
-        if (this.formName !== "")
-        {
-          return "You are watching " + this.formName.toUpperCase() + " Submissions"
-        }
-        return ""
-      }
+    filters: {
+      Upper(value) {
+        return value.toUpperCase();
+      },
     }
   }
 </script>
@@ -132,5 +128,15 @@
   .select {
     width: 30%;
     margin-bottom: 20px;
+  }
+
+  #form-name-color{
+    background: -webkit-linear-gradient(#3f5efb, #fc466b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 </style>
