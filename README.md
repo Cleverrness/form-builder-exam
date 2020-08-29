@@ -6,10 +6,10 @@ This Repo is my Form Builder app, Created using VueJS and NodeJS with express.
 
 # Instructions
 
-1. [Start] (#TheStartingProcess)
-    1. [Web App] (#WebApp)
-    1. [Server-Side only] (#ServerSide) 
-    1. [Client-Side only] (#ClientSide)
+1. [Start](#TheStartingProcess)
+    1. [Web App](#WebApp)
+    1. [Server-Side only](#ServerSide) 
+    1. [Client-Side only](#ClientSide)
 
 <a name="TheStartingProcess"></a>
 ### Starting Process
